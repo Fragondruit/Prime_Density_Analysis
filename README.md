@@ -1,10 +1,10 @@
 # Prime_Density_Analysis
-A repository for viewing Utkarsh Nigam's sample code. Implements a highly optimized Eratosthenes Sieve algorithm to find primes in C and displaying their densities using Python's MatplotLib library.
+A repository for viewing Utkarsh Nigam's sample code. Implements a highly optimized Eratosthenes Sieve algorithm to find primes in the range [3, N] in C and displaying their densities using Python's MatplotLib library.
 
 # C File
 Optimizations applied (comments in file included):
 - Loop unrolling (leads to fewer loop condition checks)
-- Stopping iteration at a THIRD of the size of the search space
+- Stopping iteration at sqrt(N)
 - Only including odd numbers in the search space as even numbers (> 2) are for sure NOT prime; cutting search space in half
 - Skipping sequences of composite numbers since only prime numbers are needed to filter out non-primes
 
