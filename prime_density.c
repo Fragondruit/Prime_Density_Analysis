@@ -4,12 +4,13 @@
 */
 
 #include <stdio.h>
+#include <math.h>
 #define boolean unsigned char
 #define PRIME 1
-#define EOF "\n"
+#define MY_EOF "\n"
 
 const int SAMPLE_LENGTH = 10;
-const unsigned long long int MAX_BOUND = 40000000;
+const unsigned long long int MAX_BOUND = 40;
 unsigned long long int length = MAX_BOUND >> 1;
 
 void find_primes( boolean* odd_nums );                                      // uses Eratosthenes sieve to find primes in the range
@@ -35,7 +36,7 @@ int main() {
     if (fptr) {
         for (int i = 0; i < length; ++ i)
             fprintf(fptr, "%d", odds[i]);
-        fprintf(fptr, EOF);
+        fprintf(fptr, MY_EOF);
     } else {
         fclose(fptr);
         printf("Failure in writing out.\n");
@@ -75,9 +76,9 @@ void find_primes( boolean* odd_nums ) {
     // numbers to mark off all their multiples, narrowing down potential primes
     int i, j, k, m, n;
     int i_inc, j_inc, k_inc, m_inc, n_inc;
-    // the highest n to filter out nonprimes has be in the form 3n = m, where m <= MAX_BOUND
-    // since we start by checking for primes by multiplying number by 3, 4, 5, so on...
-    int iterate_to = ( (2 * length) - 1 ) / 3;
+    // the highest n to filter out nonprimes is sqrt( MAX_BOUND ), since we'd
+    // be re-iterating over pairs like (3, 21) when n = 3 and (21, 3) when n = 21
+    double iterate_to = sqrt( (2 * length) - 1 );
 
     // if non-prime mark as long i
     for (int ctr = 0; ctr <= iterate_to - 5; ctr += 5) {
@@ -113,7 +114,7 @@ void find_primes( boolean* odd_nums ) {
                 // will always be in-bounds of length
                 odd_nums[i] = !PRIME;
                 _increment(&i, i_inc, &j, j_inc, &k, k_inc, &m, m_inc, &n, n_inc);
-            }
-        }
-    }
-}
+            } // end while
+        } // end if
+    } // end for
+} // end method
